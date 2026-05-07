@@ -42,7 +42,4 @@ public class AnimalAdController {
     public void delete(@PathVariable Long id) {
         service.deleteAd(id);
     }
-
-
-
 }
