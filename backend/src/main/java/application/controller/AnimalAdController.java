@@ -28,9 +28,8 @@ public class AnimalAdController {
     }
 
     @PostMapping
-    public AnimalAdDto create(@RequestBody CreateAdRequest request) {
-        Long fakeUserId = 1L; //only now------------------------------------------
-        return service.createAd(request, fakeUserId);
+    public AnimalAdDto create(@RequestBody CreateAdRequest request, @RequestHeader("Authorization") String authHeader) {
+        return service.createAd(request,authHeader);
     }
 
     @PutMapping("/{id}")

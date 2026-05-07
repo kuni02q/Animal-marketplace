@@ -1,0 +1,29 @@
+<div class="card h-100 shadow-sm">
+
+  @if (ad.imageUrl) {
+    <img
+      [src]="ad.imageUrl"
+      class="card-img-top"
+      alt="animal image"
+    />
+  }
+
+  <div class="card-body">
+
+    <h5 class="card-title">{{ ad.title }}</h5>
+
+    <p class="card-text">
+      {{ ad.description }}
+    </p>
+
+    <p class="fw-bold text-success">
+      {{ ad.price }} Ft
+    </p>
+
+    <p class="text-muted">
+      {{ ad.location }}
+    </p>
+
+  </div>
+
+</div>

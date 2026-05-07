@@ -23,8 +23,8 @@ public class AnimalAdMapper {
         dto.setPrice(ad.getPrice());
         dto.setLocation(ad.getLocation());
 
-        dto.setCategoryName(ad.getCategory().getName());
-        dto.setUsername(ad.getUser().getUsername());
+        dto.setCategoryName(ad.getCategory() != null ? ad.getCategory().getName() : null);
+        dto.setUsername(ad.getUser() != null ? ad.getUser().getUsername() : null);
 
         List<ImageDto> images = ad.getImages()
                 .stream()

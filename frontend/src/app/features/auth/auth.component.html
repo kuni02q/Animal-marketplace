@@ -1,0 +1,28 @@
+<div class="d-flex justify-content-center align-items-center vh-100">
+  <div class="card p-4 shadow-lg" style="width: 400px;">
+
+
+    <ul class="nav nav-tabs mb-3">
+      <li class="nav-item">
+        <button class="nav-link"
+                [class.active]="mode === 'login'"
+                (click)="mode = 'login'">
+          Bejelentkezés
+        </button>
+      </li>
+
+      <li class="nav-item">
+        <button class="nav-link"
+                [class.active]="mode === 'register'"
+                (click)="mode = 'register'">
+          Regisztráció
+        </button>
+      </li>
+    </ul>
+
+    <app-login *ngIf="mode === 'login'"></app-login>
+
+    <app-register *ngIf="mode === 'register'"></app-register>
+
+  </div>
+</div>

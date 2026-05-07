@@ -10,6 +10,7 @@ import application.model.User;
 import application.repository.AnimalAdRepository;
 import application.repository.CategoryRepository;
 import application.repository.UserRepository;
+import application.security.JwtService;
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -25,6 +26,7 @@ public class AnimalAdService {
     private final CategoryRepository categoryRepository;
     private final UserRepository userRepository;
     private final AnimalAdMapper mapper;
+    private final JwtService jwtService;
 
 
 
@@ -37,7 +39,11 @@ public class AnimalAdService {
         return mapper.toDto(ad);
     }
 
-    public AnimalAdDto createAd(CreateAdRequest request, Long userId){
+    public AnimalAdDto createAd(CreateAdRequest request, String authHeader) {
+
+        String token = authHeader.substring(7);
+
+        Long userId = jwtService.extractUserId(token);
 
         User user = userRepository.findById(userId).orElseThrow(()-> new RuntimeException("user not found"));
 
