@@ -1,0 +1,170 @@
+[
+  {
+    "name": "Dog",
+    "subcategories": [
+      "German Shepherd",
+      "Labrador Retriever",
+      "Golden Retriever",
+      "Husky",
+      "Border Collie",
+      "French Bulldog",
+      "Poodle",
+      "Beagle",
+      "Rottweiler",
+      "Chihuahua"
+    ]
+  },
+  {
+    "name": "Cat",
+    "subcategories": [
+      "Maine Coon",
+      "Persian",
+      "Siamese",
+      "British Shorthair",
+      "Bengal",
+      "Ragdoll",
+      "Sphynx",
+      "Norwegian Forest Cat"
+    ]
+  },
+  {
+    "name": "Bird",
+    "subcategories": [
+      "Parrot",
+      "Budgerigar",
+      "Cockatiel",
+      "Canary",
+      "Pigeon",
+      "Lovebird",
+      "Macaw",
+      "Finch"
+    ]
+  },
+  {
+    "name": "Fish",
+    "subcategories": [
+      "Goldfish",
+      "Betta",
+      "Guppy",
+      "Angelfish",
+      "Koi",
+      "Neon Tetra",
+      "Oscar Fish",
+      "Discus"
+    ]
+  },
+  {
+    "name": "Rabbit",
+    "subcategories": [
+      "Holland Lop",
+      "Mini Rex",
+      "Lionhead",
+      "Netherland Dwarf",
+      "Flemish Giant"
+    ]
+  },
+  {
+    "name": "Hamster",
+    "subcategories": [
+      "Syrian Hamster",
+      "Dwarf Hamster",
+      "Roborovski Hamster",
+      "Chinese Hamster"
+    ]
+  },
+  {
+    "name": "Guinea Pig",
+    "subcategories": [
+      "American Guinea Pig",
+      "Peruvian Guinea Pig",
+      "Abyssinian Guinea Pig",
+      "Skinny Pig"
+    ]
+  },
+  {
+    "name": "Reptile",
+    "subcategories": [
+      "Bearded Dragon",
+      "Leopard Gecko",
+      "Corn Snake",
+      "Ball Python",
+      "Iguana",
+      "Chameleon",
+      "Tortoise"
+    ]
+  },
+  {
+    "name": "Spider",
+    "subcategories": [
+      "Tarantula",
+      "Jumping Spider",
+      "Wolf Spider"
+    ]
+  },
+  {
+    "name": "Ferret",
+    "subcategories": [
+      "Standard Ferret",
+      "Angora Ferret"
+    ]
+  },
+  {
+    "name": "Horse",
+    "subcategories": [
+      "Arabian",
+      "Thoroughbred",
+      "Friesian",
+      "Mustang",
+      "Shetland Pony"
+    ]
+  },
+  {
+    "name": "Goat",
+    "subcategories": [
+      "Nubian Goat",
+      "Boer Goat",
+      "Pygmy Goat"
+    ]
+  },
+  {
+    "name": "Sheep",
+    "subcategories": [
+      "Merino",
+      "Suffolk Sheep",
+      "Dorper"
+    ]
+  },
+  {
+    "name": "Pig",
+    "subcategories": [
+      "Mini Pig",
+      "Vietnamese Pot-bellied Pig"
+    ]
+  },
+  {
+    "name": "Chicken",
+    "subcategories": [
+      "Silkie",
+      "Leghorn",
+      "Plymouth Rock",
+      "Orpington"
+    ]
+  },
+  {
+    "name": "Duck",
+    "subcategories": [
+      "Mallard",
+      "Pekin Duck",
+      "Muscovy Duck"
+    ]
+  },
+  {
+    "name": "Exotic",
+    "subcategories": [
+      "Sugar Glider",
+      "Hedgehog",
+      "Fennec Fox",
+      "Axolotl"
+    ]
+  }
+]

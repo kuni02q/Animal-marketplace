@@ -1,0 +1,21 @@
+@if (!ad){
+  <p>Loading...</p>
+}@else{
+  <div class="details-container">
+
+    <img [src]="ad.imageUrl" class="main-image">
+
+    <h1>{{ ad.title }}</h1>
+
+    <h2>{{ ad.price}} Ft</h2>
+
+    <p><strong>Location:</strong> {{ ad.location }}</p>
+
+    <p class="description">
+      {{ ad.description }}
+    </p>
+
+  </div>
+}
+
+
