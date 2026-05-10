@@ -1,73 +1,140 @@
-@if (!ad){
-  <p>Loading...</p>
-}@else{
-  <div class="details-container">
+@if (!ad) {
 
-    <h1>{{ ad.title }}</h1>
+  <div class="container mt-5">
+    <p>Loading...</p>
+  </div>
 
-    <h2>{{ ad.price}} Ft</h2>
+} @else {
 
-    <p><strong>Location:</strong> {{ ad.location }}</p>
+  <div class="container mt-4">
 
-    <p class="description">
-      {{ ad.description }}
-    </p>
-
-    @if(ad.images?.length){
-
-      <div id="adCarousel" class="carousel slide" data-bs-ride="carousel">
+    <div class="row g-4">
 
 
-        <div class="carousel-indicators">
+      <div class="col-lg-7">
 
-          @for (img of ad.images; track img.id; let i = $index) {
-            <button
-              type="button"
-              data-bs-target="#adCarousel"
-              [attr.data-bs-slide-to]="i"
-              [class.active]="i === 0"
-              [attr.aria-current]="i === 0 ? 'true' : null"
-              [attr.aria-label]="'Slide ' + (i + 1)">
-            </button>
-          }
+        @if(ad.images.length){
 
-        </div>
+          <div id="adCarousel" class="carousel slide shadow rounded overflow-hidden">
 
-        <div class="carousel-inner">
 
-          @for (img of ad.images; track img.id; let i = $index) {
+            <div class="carousel-indicators">
 
-            <div class="carousel-item" [class.active]="i === 0">
+              @for (img of ad.images; track img.id; let i = $index) {
 
-              <img
-                [src]="getImageUrl(img.url)"
-                class="d-block w-100"
-                style="max-height: 500px; object-fit: cover;"
-                alt="ad image"
-              >
+                <button
+                  type="button"
+                  data-bs-target="#adCarousel"
+                  [attr.data-bs-slide-to]="i"
+                  [class.active]="i === 0"
+                  [attr.aria-current]="i === 0 ? 'true' : null"
+                  [attr.aria-label]="'Slide ' + (i + 1)">
+                </button>
+
+              }
 
             </div>
 
-          }
 
-        </div>
+            <div class="carousel-inner">
 
-        <button class="carousel-control-prev" type="button" data-bs-target="#adCarousel" data-bs-slide="prev">
-          <span class="carousel-control-prev-icon"></span>
-          <span class="visually-hidden">Previous</span>
-        </button>
+              @for (img of ad.images; track img.id; let i = $index) {
 
-        <button class="carousel-control-next" type="button" data-bs-target="#adCarousel" data-bs-slide="next">
-          <span class="carousel-control-next-icon"></span>
-          <span class="visually-hidden">Next</span>
-        </button>
+                <div class="carousel-item" [class.active]="i === 0">
+
+                  <img
+                    [src]="getImageUrl(img.url)"
+                    class="d-block w-100 carousel-image"
+                    alt="ad image"
+                  >
+
+                </div>
+
+              }
+
+            </div>
+
+
+            <button class="carousel-control-prev" type="button" data-bs-target="#adCarousel" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon"></span>
+            </button>
+
+
+            <button class="carousel-control-next" type="button" data-bs-target="#adCarousel" data-bs-slide="next">
+              <span class="carousel-control-next-icon"></span>
+            </button>
+
+          </div>
+
+        } @else {
+
+          <div class="no-image-placeholder shadow rounded">
+            Nincs kép
+          </div>
+
+        }
 
       </div>
 
-    }
+      <!-- RIGHT SIDE -->
+      <div class="col-lg-5">
 
+        <div class="card shadow-sm border-0">
+
+          <div class="card-body">
+
+            <h1 class="mb-3">
+              {{ ad.title }}
+            </h1>
+
+            <h2 class="text-success fw-bold mb-4">
+              {{ ad.price }} Ft
+            </h2>
+
+            <div class="mb-3">
+              <span class="badge bg-secondary">
+                {{ ad.location }}
+              </span>
+            </div>
+
+            <hr>
+
+            <div class="d-grid gap-2">
+
+              <button class="btn btn-success btn-lg">
+                Kapcsolat
+              </button>
+
+              <button class="btn btn-outline-secondary">
+                Kedvencekhez adás
+              </button>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="card shadow-sm border-0 mt-4">
+
+      <div class="card-body">
+
+        <h3 class="mb-3">
+          Leírás
+        </h3>
+
+        <p class="description mb-0">
+          {{ ad.description }}
+        </p>
+
+      </div>
+
+    </div>
 
   </div>
+
 }
-
-
