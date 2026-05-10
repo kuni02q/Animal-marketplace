@@ -3,7 +3,10 @@
 }@else{
   <div class="details-container">
 
-    <img [src]="ad.imageUrl" class="main-image">
+    @if(getPrimaryImage(ad)){
+    <img [src]="getPrimaryImage(ad)" class="main-image">
+
+    }
 
     <h1>{{ ad.title }}</h1>
 

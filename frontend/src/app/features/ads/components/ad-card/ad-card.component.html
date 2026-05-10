@@ -1,8 +1,8 @@
 <div class="card h-100 shadow-sm" [routerLink]="['/ads', ad.id]">
 
-  @if (ad.imageUrl) {
+  @if (getPrimaryImage(ad)) {
     <img
-      [src]="ad.imageUrl"
+      [src]="getPrimaryImage(ad)"
       class="card-img-top"
       alt="animal image"
     />

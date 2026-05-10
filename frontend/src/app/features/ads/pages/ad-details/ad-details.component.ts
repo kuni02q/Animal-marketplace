@@ -35,4 +35,12 @@ export class AdDetailsComponent implements OnInit {
 
   }
 
+
+  getPrimaryImage(ad: AnimalAd | null): string | null {
+    if (!ad?.images?.length) return null;
+
+    const primary = ad.images.find(img => img.isPrimary);
+    return primary?.url || ad.images[0]?.url || null;
+  }
+
 }

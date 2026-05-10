@@ -14,4 +14,11 @@ export class AdCardComponent {
 
   @Input() ad!: AnimalAd;
 
+  getPrimaryImage(ad: AnimalAd): string | null {
+    if (!ad?.images?.length) return null;
+
+    const primary = ad.images.find(img => img.isPrimary);
+    return primary?.url || ad.images[0]?.url || null;
+  }
+
 }
