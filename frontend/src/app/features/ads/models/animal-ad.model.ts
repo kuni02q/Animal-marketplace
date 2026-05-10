@@ -1,3 +1,6 @@
+import {Image} from './image.model';
+
+
 export interface AnimalAd{
   id: number;
   title: string;
@@ -6,5 +9,5 @@ export interface AnimalAd{
   location: string;
   createdAt: string;
 
-  imageUrl?: string;
+  images: Image[];
 }

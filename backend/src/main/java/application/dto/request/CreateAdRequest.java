@@ -9,8 +9,7 @@ public class CreateAdRequest {
     private String description;
     private Double price;
     private String location;
-    private String imageUrl;
+
     private Long categoryId;
-    private Long userId;
 
 }

@@ -9,6 +9,7 @@ public class ImageMapper {
 
     public ImageDto toDto(Image image) {
         ImageDto dto = new ImageDto();
+        dto.setId(image.getId());
         dto.setUrl(image.getUrl());
         dto.setIsPrimary(image.getIsPrimary());
         return dto;

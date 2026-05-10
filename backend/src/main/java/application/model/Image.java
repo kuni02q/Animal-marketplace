@@ -15,6 +15,7 @@ public class Image {
     private Long id;
 
     private String url;
+    private String fileName;
 
     private Boolean isPrimary = false;
 

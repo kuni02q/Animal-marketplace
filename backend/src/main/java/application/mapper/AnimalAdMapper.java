@@ -22,6 +22,7 @@ public class AnimalAdMapper {
         dto.setDescription(ad.getDescription());
         dto.setPrice(ad.getPrice());
         dto.setLocation(ad.getLocation());
+        dto.setCreatedAt(ad.getCreatedAt());
 
         dto.setCategoryName(ad.getCategory() != null ? ad.getCategory().getName() : null);
         dto.setUsername(ad.getUser() != null ? ad.getUser().getUsername() : null);

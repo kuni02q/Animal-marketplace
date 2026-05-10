@@ -7,6 +7,7 @@ import application.model.AnimalAd;
 import application.service.AnimalAdService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -27,18 +28,25 @@ public class AnimalAdController {
         return service.getById(id);
     }
 
-    @PostMapping
-    public AnimalAdDto create(@RequestBody CreateAdRequest request, @RequestHeader("Authorization") String authHeader) {
-        return service.createAd(request,authHeader);
+    @PostMapping(consumes = {"multipart/form-data"})
+    public AnimalAdDto create(@ModelAttribute CreateAdRequest request,
+                              @RequestParam(required = false) MultipartFile[] images,
+                              @RequestHeader("Authorization") String authHeader) {
+        return service.createAd(request, images, authHeader);
     }
 
-    @PutMapping("/{id}")
-    public AnimalAdDto update(@PathVariable Long id ,@RequestBody UpdateAdRequest request) {
-        return service.updateAd(id,request);
+    @PutMapping(value= "/{id}", consumes = {"multipart/form-data"})
+    public AnimalAdDto update(@PathVariable Long id,
+                              @ModelAttribute UpdateAdRequest request,
+                              @RequestParam(required = false) MultipartFile[] newImages,
+                              @RequestParam(required = false) List<Long> deleteImageIds,
+                              @RequestHeader("Authorization") String authHeader) {
+        return service.updateAd(id,request, newImages, deleteImageIds,  authHeader);
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id) {
-        service.deleteAd(id);
+    public void delete(@PathVariable Long id,
+                       @RequestHeader("Authorization") String authHeader) {
+        service.deleteAd(id, authHeader);
     }
 }

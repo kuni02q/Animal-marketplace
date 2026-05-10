@@ -36,7 +36,7 @@ public class AnimalAd {
     @JoinColumn(name="user_id")
     private User user;
 
-    @OneToMany(mappedBy = "ad", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "ad", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Image> images = new ArrayList<>();
 
     @ManyToOne
