@@ -2,6 +2,7 @@ import {Component, Input} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {AnimalAd} from '../../models/animal-ad.model';
 import {RouterLink} from '@angular/router';
+import {environment} from '../../../../../environments/environment';
 
 @Component({
   selector: 'app-ad-card',
@@ -18,7 +19,8 @@ export class AdCardComponent {
     if (!ad?.images?.length) return null;
 
     const primary = ad.images.find(img => img.isPrimary);
-    return primary?.url || ad.images[0]?.url || null;
+    const url=primary?.url || ad.images[0]?.url;
+    return url ? environment.apiUrl + url : null;
   }
 
 }

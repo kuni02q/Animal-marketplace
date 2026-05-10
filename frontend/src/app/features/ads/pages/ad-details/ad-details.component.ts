@@ -5,6 +5,7 @@ import {ActivatedRoute} from '@angular/router';
 import {AdsService} from '../../services/ads.service';
 import {CommonModule} from '@angular/common';
 import {switchMap} from 'rxjs';
+import {environment} from '../../../../../environments/environment';
 
 @Component({
   selector: 'app-ad-details',
@@ -41,6 +42,10 @@ export class AdDetailsComponent implements OnInit {
 
     const primary = ad.images.find(img => img.isPrimary);
     return primary?.url || ad.images[0]?.url || null;
+  }
+
+  getImageUrl(url: string): string{
+    return environment.apiUrl + url;
   }
 
 }

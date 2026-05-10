@@ -3,11 +3,6 @@
 }@else{
   <div class="details-container">
 
-    @if(getPrimaryImage(ad)){
-    <img [src]="getPrimaryImage(ad)" class="main-image">
-
-    }
-
     <h1>{{ ad.title }}</h1>
 
     <h2>{{ ad.price}} Ft</h2>
@@ -17,6 +12,60 @@
     <p class="description">
       {{ ad.description }}
     </p>
+
+    @if(ad.images?.length){
+
+      <div id="adCarousel" class="carousel slide" data-bs-ride="carousel">
+
+
+        <div class="carousel-indicators">
+
+          @for (img of ad.images; track img.id; let i = $index) {
+            <button
+              type="button"
+              data-bs-target="#adCarousel"
+              [attr.data-bs-slide-to]="i"
+              [class.active]="i === 0"
+              [attr.aria-current]="i === 0 ? 'true' : null"
+              [attr.aria-label]="'Slide ' + (i + 1)">
+            </button>
+          }
+
+        </div>
+
+        <div class="carousel-inner">
+
+          @for (img of ad.images; track img.id; let i = $index) {
+
+            <div class="carousel-item" [class.active]="i === 0">
+
+              <img
+                [src]="getImageUrl(img.url)"
+                class="d-block w-100"
+                style="max-height: 500px; object-fit: cover;"
+                alt="ad image"
+              >
+
+            </div>
+
+          }
+
+        </div>
+
+        <button class="carousel-control-prev" type="button" data-bs-target="#adCarousel" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+
+        <button class="carousel-control-next" type="button" data-bs-target="#adCarousel" data-bs-slide="next">
+          <span class="carousel-control-next-icon"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+
+      </div>
+
+    }
+
 
   </div>
 }
