@@ -28,6 +28,14 @@ public class AnimalAdController {
         return service.getById(id);
     }
 
+    @GetMapping("/my")
+    public List<AnimalAdDto> getMyAds(@RequestHeader("Authorization") String authHeader) {
+        return service.getMyAds(authHeader);
+    }
+
+
+
+
     @PostMapping(consumes = {"multipart/form-data"})
     public AnimalAdDto create(@ModelAttribute CreateAdRequest request,
                               @RequestParam(required = false) MultipartFile[] images,

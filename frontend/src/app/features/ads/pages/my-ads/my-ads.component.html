@@ -1,0 +1,52 @@
+<div class="container mt-4">
+
+  <div class="d-flex justify-content-between align-items-center mb-4">
+
+    <h2 class="mb-0">
+      Saját hirdetések
+    </h2>
+
+    <button
+      class="btn btn-success"
+      (click)="onCreate()">
+
+      + Új hirdetés
+
+    </button>
+
+  </div>
+
+  @if (loading) {
+
+    <p>Loading...</p>
+
+  } @else if (ads.length === 0) {
+
+    <div class="alert alert-secondary">
+      Nincs saját hirdetésed.
+    </div>
+
+  } @else {
+
+    <div class="row g-3 align-items-stretch">
+
+      @for (ad of ads; track ad.id) {
+
+        <div class="col-md-4 mb-4">
+
+          <app-ad-card
+            [ad]="ad"
+            [showActions]="true"
+            (edit)="onEditAd($event)"
+            (delete)="onDelete($event)">
+          </app-ad-card>
+
+        </div>
+
+      }
+
+    </div>
+
+  }
+
+</div>

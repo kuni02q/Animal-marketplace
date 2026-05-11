@@ -34,4 +34,28 @@
 
   </div>
 
+  @if (showActions) {
+
+    <div class="card-footer bg-white border-0 d-flex gap-2">
+
+      <button
+        class="btn btn-outline-primary w-100"
+        (click)="onEdit($event)">
+
+        Módosítás
+
+      </button>
+
+      <button
+        class="btn btn-outline-danger w-100"
+        (click)="onDelete($event)">
+
+        Törlés
+
+      </button>
+
+    </div>
+
+  }
+
 </div>

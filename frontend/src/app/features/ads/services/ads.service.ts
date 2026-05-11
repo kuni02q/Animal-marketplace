@@ -20,4 +20,8 @@ export class AdsService {
     return this.http.get<AnimalAd>(`${this.api}/${id}`);
   }
 
+  getMyAds(): Observable<AnimalAd[]>{
+    return this.http.get<AnimalAd[]>(`${this.api}/my`);
+  }
+
 }

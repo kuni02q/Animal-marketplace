@@ -44,6 +44,16 @@ public class AnimalAdService {
         return mapper.toDto(ad);
     }
 
+    public List<AnimalAdDto> getMyAds(String authHeader){
+
+        String token = authHeader.substring(7);
+        Long userId = jwtService.extractUserId(token);
+
+        return adRepository.findByUserId(userId).stream().map(mapper::toDto).toList();
+
+    }
+
+
     public AnimalAdDto createAd(CreateAdRequest request, MultipartFile[] images, String authHeader) {
 
         String token = authHeader.substring(7);
