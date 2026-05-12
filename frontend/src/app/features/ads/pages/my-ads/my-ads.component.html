@@ -38,7 +38,7 @@
             [ad]="ad"
             [showActions]="true"
             (edit)="onEditAd($event)"
-            (delete)="deleteAd($event)">
+            (delete)="openDeleteModal($event)">
           </app-ad-card>
 
         </div>
@@ -49,4 +49,67 @@
 
   }
 
+</div>
+
+
+
+<div
+  class="modal fade"
+  tabindex="-1"
+  [class.show]="showDeleteModal"
+  [style.display]="showDeleteModal ? 'block' : 'none'">
+
+  <div class="modal-dialog modal-dialog-centered">
+
+    <div class="modal-content">
+
+      <div class="modal-header">
+
+        <h5 class="modal-title">
+          Törlés megerősítése
+        </h5>
+
+        <button
+          type="button"
+          class="btn-close"
+          (click)="closeDeleteModal()">
+        </button>
+
+      </div>
+
+      <div class="modal-body">
+        <p>Biztosan törölni szeretnéd ezt a hirdetést?</p>
+      </div>
+
+      <div class="modal-footer">
+
+        <button
+          class="btn btn-secondary"
+          (click)="closeDeleteModal()">
+
+          Mégse
+
+        </button>
+
+        <button
+          class="btn btn-danger"
+          (click)="confirmDelete()">
+
+          Törlés
+
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- backdrop -->
+<div
+  class="modal-backdrop fade show"
+  *ngIf="showDeleteModal">
 </div>

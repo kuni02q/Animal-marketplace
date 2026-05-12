@@ -17,6 +17,9 @@ export class MyAdsComponent implements OnInit {
   ads: AnimalAd[] = [];
   loading = true;
 
+  showDeleteModal = false;
+  selectedDeleteId: number | null = null;
+
   constructor(private adsService: AdsService, private cdr: ChangeDetectorRef, private router: Router) { }
 
   ngOnInit(): void {
@@ -44,24 +47,42 @@ export class MyAdsComponent implements OnInit {
     console.log("edit", id);
   }
 
-  deleteAd(id: number) {
-
-    const confirmed = confirm("Biztosan törlöd a hirdetést?");
-
-    if (!confirmed) return;
-
-    this.adsService.deleteAd(id).subscribe({
-      next: () => {
-        this.ads = this.ads.filter(ad => ad.id !== id);
-        this.cdr.markForCheck();
-      },
-      error: (err) => {console.error(err)}
-    })
-
-  }
-
   onCreate() {
     this.router.navigate(['/create-ad']);
+  }
+
+
+  openDeleteModal(id: number) {
+    this.selectedDeleteId = id;
+    this.showDeleteModal = true;
+  }
+
+
+  closeDeleteModal() {
+    this.showDeleteModal = false;
+    this.selectedDeleteId = null;
+  }
+
+
+  confirmDelete() {
+    if (!this.selectedDeleteId) return;
+
+    this.adsService.deleteAd(this.selectedDeleteId).subscribe({
+      next: () => {
+
+        this.ads = this.ads.filter(
+          ad => ad.id !== this.selectedDeleteId
+        );
+
+        this.closeDeleteModal();
+        this.cdr.detectChanges();
+
+      },
+      error: (err) => {
+        console.error(err);
+        this.closeDeleteModal();
+      }
+    });
   }
 
 
