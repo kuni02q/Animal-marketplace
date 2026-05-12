@@ -1,5 +1,6 @@
 package application.controller;
 
+import application.dto.response.CategoryDto;
 import application.model.Category;
 import application.service.CategoryService;
 import lombok.RequiredArgsConstructor;
@@ -18,12 +19,12 @@ public class CategoryController {
     private final CategoryService categoryService;
 
     @GetMapping
-    public List<Category> getAll(){
+    public List<CategoryDto> getAll(){
         return categoryService.getAll();
     }
 
     @GetMapping("/{id}")
-    public Category getById(@PathVariable Long id){
+    public CategoryDto getById(@PathVariable Long id){
         return categoryService.getById(id);
     }
 

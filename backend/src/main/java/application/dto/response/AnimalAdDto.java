@@ -14,6 +14,7 @@ public class AnimalAdDto {
     private Double price;
     private String location;
     private LocalDateTime createdAt;
+    private Long categoryId;
     private String categoryName;
     private String username;
     private List<ImageDto> images;

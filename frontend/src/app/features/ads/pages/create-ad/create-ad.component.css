@@ -1,0 +1,31 @@
+.upload-zone {
+  border: 2px dashed #bbb;
+  border-radius: 12px;
+  padding: 50px;
+  text-align: center;
+  cursor: pointer;
+  transition: 0.2s;
+  background: #fafafa;
+}
+
+.upload-zone:hover {
+  border-color: #198754;
+  background: #f5fff8;
+}
+
+.preview-card {
+  position: relative;
+}
+
+.preview-image {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.remove-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+}

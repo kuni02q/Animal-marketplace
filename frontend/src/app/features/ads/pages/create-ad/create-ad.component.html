@@ -1,0 +1,167 @@
+<div class="container mt-4 mb-5">
+
+  <div class="card shadow-sm border-0">
+
+    <div class="card-body p-4">
+
+      <h2 class="mb-4">
+        Új hirdetés létrehozása
+      </h2>
+
+      <div class="mb-3">
+
+        <label class="form-label">
+          Cím
+        </label>
+
+        <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="title">
+
+      </div>
+
+      <div class="mb-3">
+
+        <label class="form-label">
+          Leírás
+        </label>
+
+        <textarea
+          rows="6"
+          class="form-control"
+          [(ngModel)]="description">
+        </textarea>
+
+      </div>
+
+      <div class="row">
+
+        <div class="col-md-6 mb-3">
+
+          <label class="form-label">
+            Ár
+          </label>
+
+          <input
+            type="number"
+            class="form-control"
+            [(ngModel)]="price">
+
+        </div>
+
+        <div class="col-md-6 mb-3">
+
+          <label class="form-label">
+            Hely
+          </label>
+
+          <input
+            type="text"
+            class="form-control"
+            [(ngModel)]="location">
+
+        </div>
+
+      </div>
+
+      <div class="mb-4">
+
+        <label class="form-label">
+          Kategória
+        </label>
+
+        <select
+          class="form-select"
+          [(ngModel)]="categoryId">
+
+          <option [ngValue]="null">
+            Válassz kategóriát
+          </option>
+
+          @for (category of categories; track category.id) {
+
+            <option [value]="category.id">
+              {{ category.name }}
+            </option>
+
+          }
+
+        </select>
+
+      </div>
+
+      <div
+        class="upload-zone mb-3"
+        (dragover)="onDragOver($event)"
+        (drop)="onDrop($event)"
+        (click)="fileInput.click()">
+
+        <p class="mb-1">
+          Húzd ide a képeket
+        </p>
+
+        <small class="text-muted">
+          vagy kattints a feltöltéshez
+        </small>
+
+        <input
+          #fileInput
+          type="file"
+          hidden
+          multiple
+          accept="image/*"
+          (change)="onFileSelected($event)">
+      </div>
+
+      @if (selectedImages.length) {
+
+        <div class="row g-3 mb-4">
+
+          @for (image of selectedImages; track image.preview; let i = $index) {
+
+            <div class="col-md-3">
+
+              <div class="preview-card">
+
+                <img
+                  [src]="image.preview"
+                  class="preview-image"
+                  alt="preview">
+
+                <button
+                  class="btn btn-sm btn-danger remove-btn"
+                  (click)="removeImage(i)">
+
+                  ×
+
+                </button>
+
+              </div>
+
+            </div>
+
+          }
+
+        </div>
+
+      }
+
+      <button
+        class="btn btn-success btn-lg"
+        [disabled]="loading"
+        (click)="createAd()">
+
+        @if (loading) {
+          Mentés...
+        } @else {
+          Hirdetés létrehozása
+        }
+
+      </button>
+
+    </div>
+
+  </div>
+
+</div>

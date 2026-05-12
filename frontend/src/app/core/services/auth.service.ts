@@ -1,21 +1,21 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {ApiService} from './api.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
 
-  private api="/api/auth";
+  private api= '/api/auth';
 
-  constructor(private http: HttpClient) {}
+  constructor(private apiService: ApiService) {}
 
   register(data: any) {
-    return this.http.post<any>(`${this.api}/register`, data);
+    return this.apiService.post<any>(`${this.api}/register`, data);
   }
 
   login(data: any) {
-    return this.http.post<any>(`${this.api}/login`, data);
+    return this.apiService.post<any>(`${this.api}/login`, data);
   }
 
   saveToken(token: string) {

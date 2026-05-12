@@ -55,7 +55,7 @@ public class ImageService {
                     }
 
                 }catch (IOException e){
-                    throw new RuntimeException("Invalid image file");
+                    throw new RuntimeException("Image processing failed: "+e.getMessage());
                 }
 
                 String fileName =

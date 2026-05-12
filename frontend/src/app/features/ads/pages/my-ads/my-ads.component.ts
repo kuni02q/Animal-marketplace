@@ -3,6 +3,7 @@ import {CommonModule} from '@angular/common';
 import {AdCardComponent} from '../../components/ad-card/ad-card.component';
 import {AnimalAd} from '../../models/animal-ad.model';
 import {AdsService} from '../../services/ads.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-my-ads',
@@ -16,7 +17,7 @@ export class MyAdsComponent implements OnInit {
   ads: AnimalAd[] = [];
   loading = true;
 
-  constructor(private adsService: AdsService, private cdr: ChangeDetectorRef) { }
+  constructor(private adsService: AdsService, private cdr: ChangeDetectorRef, private router: Router) { }
 
   ngOnInit(): void {
     this.loadAds();
@@ -43,12 +44,24 @@ export class MyAdsComponent implements OnInit {
     console.log("edit", id);
   }
 
-  onDelete(id: number) {
-    console.log("delete", id);
+  deleteAd(id: number) {
+
+    const confirmed = confirm("Biztosan törlöd a hirdetést?");
+
+    if (!confirmed) return;
+
+    this.adsService.deleteAd(id).subscribe({
+      next: () => {
+        this.ads = this.ads.filter(ad => ad.id !== id);
+        this.cdr.markForCheck();
+      },
+      error: (err) => {console.error(err)}
+    })
+
   }
 
   onCreate() {
-    console.log("create");
+    this.router.navigate(['/create-ad']);
   }
 
 
