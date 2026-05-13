@@ -12,4 +12,5 @@ export const routes: Routes = [
   {path: 'ads/:id', component: AdDetailsComponent},
   {path: 'my-ads', component: MyAdsComponent, canActivate: [authGuard] },
   {path: 'create-ad', component: CreateAdComponent, canActivate: [authGuard] },
+  {path: 'edit-ad/:id', component: CreateAdComponent, canActivate: [authGuard] },
 ];

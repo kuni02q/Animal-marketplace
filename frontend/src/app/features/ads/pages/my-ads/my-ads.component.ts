@@ -44,7 +44,7 @@ export class MyAdsComponent implements OnInit {
 
 
   onEditAd(id: number) {
-    console.log("edit", id);
+    this.router.navigate(['/edit-ad', id]);
   }
 
   onCreate() {

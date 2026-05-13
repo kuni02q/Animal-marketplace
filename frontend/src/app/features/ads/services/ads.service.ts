@@ -34,6 +34,10 @@ export class AdsService {
     return this.apiService.delete(`${this.api}/${id}`);
   }
 
+  updateAd(id: number, formData: FormData){
+    return this.apiService.put<AnimalAd>(`${this.api}/${id}`, formData);
+  }
+
 
 
 

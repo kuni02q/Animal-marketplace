@@ -8,6 +8,10 @@ export interface AnimalAd{
   price: number;
   location: string;
   createdAt: string;
+  categoryId: number;
+  categoryName: string;
+
+  username: string;
 
   images: Image[];
 }

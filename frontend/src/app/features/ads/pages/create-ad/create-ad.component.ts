@@ -4,7 +4,9 @@ import {FormsModule} from '@angular/forms';
 import {ApiService} from '../../../../core/services/api.service';
 import {AdsService} from '../../services/ads.service';
 import {CategoryService} from '../../../../core/services/category.service';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
+import {environment} from '../../../../../environments/environment';
+import {AllImage} from '../../models/all-image.model';
 
 @Component({
   selector: 'app-create-ad',
@@ -23,26 +25,39 @@ export class CreateAdComponent implements OnInit {
 
   categories: any[] = [];
 
-  selectedImages:{
-    file: File;
-    preview: string;
-  }[] = [];
+  images: AllImage[] = []
+  imagesToDelete: number[] = [];
 
   loading = false;
+
+  isEditMode = false;
+  adId: number | null = null;
 
   @ViewChild('fileInput')
   fileInput!: ElementRef<HTMLInputElement>;
 
-  constructor(private adsService: AdsService, private categoryService: CategoryService, private router: Router, private cdr: ChangeDetectorRef) {}
+  constructor(private adsService: AdsService, private categoryService: CategoryService,
+              private router: Router, private cdr: ChangeDetectorRef,
+              private route: ActivatedRoute,) {
+  }
 
   ngOnInit(): void {
     this.loadCategories();
+
+    const id = this.route.snapshot.paramMap.get('id');
+
+    if (id) {
+      this.isEditMode = true;
+      this.adId = Number(id);
+
+      this.loadAd(this.adId)
+    }
+
   }
 
   loadCategories() {
     this.categoryService.getAll().subscribe({
-      next: (data) =>{
-        console.log(data);
+      next: (data) => {
         this.categories = data;
 
         this.cdr.markForCheck();
@@ -53,54 +68,60 @@ export class CreateAdComponent implements OnInit {
     })
   }
 
-  onDragOver(event: DragEvent){
+  onDragOver(event: DragEvent) {
     event.preventDefault();
   }
 
-  onDrop(event: DragEvent){
+  onDrop(event: DragEvent) {
     event.preventDefault();
+    if (!event.dataTransfer?.files) return;
 
-    if(event.dataTransfer?.files){
-      for (const file of Array.from(event.dataTransfer.files)) {
+    const dropped: AllImage[] = Array.from(event.dataTransfer.files).map(file => ({
+      type: 'new',
+      file,
+      preview: URL.createObjectURL(file),
+      key: crypto.randomUUID()
+    }));
 
-        this.selectedImages.push({
-          file,
-          preview: URL.createObjectURL(file),
-        });
-
-      }
-    }
+    this.images = [...this.images, ...dropped];
 
   }
 
-  onFileSelected(event: Event){
+  onFileSelected(event: Event) {
 
     const input = event.target as HTMLInputElement;
 
     if (!input.files) return;
 
-    for (const file of Array.from(input.files)) {
+    const newImages: AllImage[] = Array.from(input.files).map(file => ({
+      type: 'new',
+      file,
+      preview: URL.createObjectURL(file),
+      key: crypto.randomUUID()
+    }));
 
-      this.selectedImages.push({
-        file,
-        preview: URL.createObjectURL(file),
-      });
+    this.images = [...this.images, ...newImages];
 
+  }
+
+
+  removeImage(image: AllImage) {
+
+    if (image.type === 'existing') {
+      this.imagesToDelete.push(image.id);
     }
 
+    if (image.type === 'new') {
+      URL.revokeObjectURL(image.preview);
+    }
+
+    this.images = this.images.filter(i => i.key !== image.key);
   }
 
 
-  removeImage(index: number) {
+  createAd() {
 
-    URL.revokeObjectURL(this.selectedImages[index].preview)
-
-    this.selectedImages.splice(index, 1);
-  }
-
-  createAd(){
-
-    if (!this.title || !this.price || !this.location || !this.categoryId){
+    if (!this.title || !this.price || !this.location || !this.categoryId) {
       return;
     }
 
@@ -114,23 +135,52 @@ export class CreateAdComponent implements OnInit {
     formData.append('location', this.location);
     formData.append('categoryId', this.categoryId.toString());
 
-    for (const image of this.selectedImages){
-      formData.append('images', image.file);
+    for (const img of this.images) {
+      if(img.type === 'new') {
+        formData.append('images', img.file);
+      }
     }
 
-    this.adsService.createAd(formData).subscribe({
-      next: (ad) =>{
+    for (const id of this.imagesToDelete) {
+      formData.append('deleteImageIds', id.toString());
+    }
+
+    const request = this.isEditMode && this.adId
+      ? this.adsService.updateAd(this.adId!, formData)
+      : this.adsService.createAd(formData);
+
+    request.subscribe({
+      next: (ad) => {
         this.router.navigate(['/ads', ad.id]);
       },
-      error: (err)=>{
+      error: (err) => {
         console.error(err)
         this.loading = false;
       }
     });
   }
 
+  loadAd(id: number) {
 
+    this.adsService.getById(id).subscribe({
+      next: (ad) => {
+        this.title = ad.title;
+        this.description = ad.description;
+        this.price = ad.price;
+        this.location = ad.location;
+        this.categoryId = ad.categoryId;
 
+        const existing: AllImage[] = ad.images.map(img => ({
+          type: 'existing',
+          id: img.id,
+          url: environment.apiUrl + img.url,
+          key: crypto.randomUUID()
+        }));
+
+        this.images = existing;
+      }
+    });
+  }
 
 
 }

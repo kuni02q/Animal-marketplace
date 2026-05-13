@@ -84,7 +84,7 @@ public class AnimalAdService {
     }
 
 
-    public AnimalAdDto updateAd(Long id, UpdateAdRequest request, MultipartFile[] newImages, List<Long> deleteImageIds, String authHeader) {
+    public AnimalAdDto updateAd(Long id, UpdateAdRequest request, MultipartFile[] images, List<String> deleteImageIds, String authHeader) {
 
         String token = authHeader.substring(7);
 
@@ -112,17 +112,19 @@ public class AnimalAdService {
 
         if(deleteImageIds != null){
 
-            for (Long imageId : deleteImageIds) {
+            for (String imageIdStr: deleteImageIds) {
 
+                Long imageId = Long.valueOf(imageIdStr);
                 Image image = imageRepository.findById(imageId).orElseThrow(() -> new RuntimeException("image not found"));
 
+                ad.getImages().remove(image);
                 imageService.deleteImage(image);
 
             }
 
         }
 
-        imageService.saveImages(ad, newImages);
+        imageService.saveImages(ad, images);
 
         return mapper.toDto(adRepository.save(ad));
     }

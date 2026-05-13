@@ -5,7 +5,11 @@
     <div class="card-body p-4">
 
       <h2 class="mb-4">
+        @if (isEditMode){
+          Hirdetés módosítása
+        } @else {
         Új hirdetés létrehozása
+        }
       </h2>
 
       <div class="mb-3">
@@ -114,24 +118,26 @@
           (change)="onFileSelected($event)">
       </div>
 
-      @if (selectedImages.length) {
+      <!------------------------------->
+
+      @if (images.length) {
 
         <div class="row g-3 mb-4">
 
-          @for (image of selectedImages; track image.preview; let i = $index) {
+          @for (image of images; track image.key) {
 
             <div class="col-md-3">
 
               <div class="preview-card">
 
                 <img
-                  [src]="image.preview"
+                  [src]="image.type === 'existing' ? image.url : image.preview"
                   class="preview-image"
-                  alt="preview">
+                  alt="image">
 
                 <button
                   class="btn btn-sm btn-danger remove-btn"
-                  (click)="removeImage(i)">
+                  (click)="removeImage(image)">
 
                   ×
 
@@ -154,7 +160,9 @@
 
         @if (loading) {
           Mentés...
-        } @else {
+        } @else if(isEditMode){
+          Mentés
+        }@else{
           Hirdetés létrehozása
         }
 

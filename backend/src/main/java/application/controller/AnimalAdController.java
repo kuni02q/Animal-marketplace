@@ -46,10 +46,10 @@ public class AnimalAdController {
     @PutMapping(value= "/{id}", consumes = {"multipart/form-data"})
     public AnimalAdDto update(@PathVariable Long id,
                               @ModelAttribute UpdateAdRequest request,
-                              @RequestParam(required = false) MultipartFile[] newImages,
-                              @RequestParam(required = false) List<Long> deleteImageIds,
+                              @RequestParam(required = false) MultipartFile[] images,
+                              @RequestParam(required = false) List<String> deleteImageIds,
                               @RequestHeader("Authorization") String authHeader) {
-        return service.updateAd(id,request, newImages, deleteImageIds,  authHeader);
+        return service.updateAd(id,request, images, deleteImageIds,  authHeader);
     }
 
     @DeleteMapping("/{id}")
