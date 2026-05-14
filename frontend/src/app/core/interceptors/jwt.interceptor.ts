@@ -1,16 +1,32 @@
-import { HttpInterceptorFn } from '@angular/common/http';
+import {HttpErrorResponse, HttpInterceptorFn} from '@angular/common/http';
+import {inject} from '@angular/core';
+import {AuthService} from '../services/auth.service';
+import {Router} from '@angular/router';
+import {catchError, throwError} from 'rxjs';
 
 export const jwtInterceptor: HttpInterceptorFn = (req, next) => {
 
-  const token = localStorage.getItem('token');
+  const authService = inject(AuthService);
+  const router = inject(Router);
 
-  if (!token) return next(req);
+  const token = authService.getToken();
 
-  const cloned = req.clone({
-    setHeaders: {
-      Authorization: `Bearer ${token}`
-    }
-  });
+  let authReq = req;
 
-  return next(cloned);
+  if (token) {
+    authReq = req.clone({
+      setHeaders: {'Authorization': `Bearer ${token}`},
+    });
+  }
+
+  return next(authReq).pipe(
+    catchError((err: HttpErrorResponse) => {
+      if (err.status === 401) {
+        authService.logout();
+      }
+
+      return throwError(() => err);
+
+    })
+  );
 };
