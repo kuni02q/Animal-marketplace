@@ -5,6 +5,7 @@ import {MyAdsComponent} from './features/ads/pages/my-ads/my-ads.component';
 import {AdDetailsComponent} from './features/ads/pages/ad-details/ad-details.component';
 import {authGuard} from './core/guards/auth.guard';
 import {CreateAdComponent} from './features/ads/pages/create-ad/create-ad.component';
+import {FavoritesComponent} from './features/ads/pages/favorites/favorites.component';
 
 export const routes: Routes = [
   {path: '', component: AdsListComponent},
@@ -13,4 +14,5 @@ export const routes: Routes = [
   {path: 'my-ads', component: MyAdsComponent, canActivate: [authGuard] },
   {path: 'create-ad', component: CreateAdComponent, canActivate: [authGuard] },
   {path: 'edit-ad/:id', component: CreateAdComponent, canActivate: [authGuard] },
+  {path: 'favorites', component: FavoritesComponent, canActivate: [authGuard] },
 ];

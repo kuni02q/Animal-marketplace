@@ -105,8 +105,10 @@
                 Kapcsolat
               </button>
 
-              <button class="btn btn-outline-secondary">
-                Kedvencekhez adás
+              <button class="btn"
+                      [ngClass]="isFav ? 'btn-danger' : 'btn-outline-secondary'"
+                      (click)="toggleFavorites()">
+                {{ isFav ? 'Eltávolítás a kedvencekből' : 'Kedvencekhez adás'}}
               </button>
 
             </div>

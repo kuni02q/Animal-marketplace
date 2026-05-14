@@ -5,6 +5,7 @@ import {AdsService} from '../../services/ads.service';
 import {CommonModule} from '@angular/common';
 import {switchMap} from 'rxjs';
 import {environment} from '../../../../../environments/environment';
+import {FavoritesService} from '../../services/favorites.service';
 
 @Component({
   selector: 'app-ad-details',
@@ -16,7 +17,10 @@ import {environment} from '../../../../../environments/environment';
 export class AdDetailsComponent implements OnInit {
   ad: AnimalAd | null = null;
 
-  constructor(private route: ActivatedRoute, private adsService: AdsService, private cdr: ChangeDetectorRef) { }
+  isFav = false;
+
+  constructor(private route: ActivatedRoute, private adsService: AdsService,
+              private cdr: ChangeDetectorRef, private favoritesService: FavoritesService) { }
 
   ngOnInit(): void {
     this.route.paramMap.pipe(
@@ -28,7 +32,10 @@ export class AdDetailsComponent implements OnInit {
       .subscribe({
         next: (data) =>{
           this.ad = data;
+
           this.cdr.markForCheck();
+
+          this.checkFavorite();
         },
         error: (err) => console.error(err),
       });
@@ -39,5 +46,32 @@ export class AdDetailsComponent implements OnInit {
   getImageUrl(url: string): string{
     return environment.apiUrl + url;
   }
+
+  toggleFavorites(){
+
+    if (!this.ad) return;
+
+    this.favoritesService.toggleFavorite(this.ad.id).subscribe({
+      next: (res) => {
+        this.isFav = res;
+        this.cdr.detectChanges();
+      },
+      error: (err) => console.log(err)
+    });
+
+  }
+
+  checkFavorite() {
+    if (!this.ad) return;
+
+    this.favoritesService.isFavorite(this.ad.id).subscribe({
+      next: res => {
+        this.isFav = res;
+        this.cdr.markForCheck();
+      },
+      error: err => console.error(err)
+    });
+  }
+
 
 }

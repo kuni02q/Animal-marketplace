@@ -16,9 +16,11 @@ export class AdCardComponent {
   @Input() ad!: AnimalAd;
 
   @Input() showActions = false;
+  @Input() showFavoriteRemove = false;
 
   @Output() edit = new EventEmitter<number>();
   @Output() delete = new EventEmitter<number>();
+  @Output() removeFavorite = new EventEmitter<number>();
 
 
   getPrimaryImage(ad: AnimalAd): string | null {
@@ -37,6 +39,13 @@ export class AdCardComponent {
   onDelete(event: MouseEvent){
     event.stopPropagation();
     this.delete.emit(this.ad.id);
+  }
+
+  onRemoveFavorite(event: Event) {
+
+    event.stopPropagation();
+
+    this.removeFavorite.emit(this.ad.id);
   }
 
 }
