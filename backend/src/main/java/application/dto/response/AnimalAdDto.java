@@ -2,6 +2,7 @@ package application.dto.response;
 
 import lombok.Data;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -21,8 +22,12 @@ public class AnimalAdDto {
     private Boolean neutered;
     private String gender;
     private String status;
+    private LocalDate birthDate;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+
+    private Integer viewCount;
+
     private Long categoryId;
     private String categoryName;
     private String username;

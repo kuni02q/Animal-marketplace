@@ -91,13 +91,32 @@
               {{ ad.price }} Ft
             </h2>
 
-            <div class="mb-3">
-              <span class="badge bg-secondary">
-                {{ ad.location }}
-              </span>
-            </div>
+            <p class="text-muted">
+              {{ ad.country || 'N/A' }} / {{ ad.city || 'N/A' }}
+
+            </p>
 
             <hr>
+
+            <p><strong>Kategória:</strong> {{ ad.categoryName }}</p>
+            <p><strong>Feladó:</strong> {{ ad.username }}</p>
+
+            <p><strong>Nézettség:</strong> {{ ad.viewCount ?? 0 }}</p>
+
+            <hr>
+
+            <p><strong>Nem:</strong> {{ ad.gender }}</p>
+            <p><strong>Súly:</strong> {{ ad.weight }} kg</p>
+            <p><strong>Kor:</strong> {{ ad.age }} év</p>
+
+            <hr>
+
+            <p>Oltott: {{ ad.vaccinated ? 'Igen' : 'Nem' }}</p>
+            <p>Chippelt: {{ ad.chipped ? 'Igen' : 'Nem' }}</p>
+            <p>Ivartalanított: {{ ad.neutered ? 'Igen' : 'Nem' }}</p>
+
+            <hr>
+
 
             <div class="d-grid gap-2">
 

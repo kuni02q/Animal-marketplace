@@ -21,7 +21,6 @@ export class CreateAdComponent implements OnInit {
   title = "";
   description = "";
   price: number | null = null;
-  location = "";
   categoryId: number | null = null;
 
 
@@ -33,12 +32,27 @@ export class CreateAdComponent implements OnInit {
   isEditMode = false;
   adId: number | null = null;
 
+  birthDate: string | null = null;
+
+  weight: number | null = null;
+
+  gender: 'MALE' | 'FEMALE' | 'UNKNOWN' | null = null;
+
+  vaccinated = false;
+  chipped = false;
+  neutered = false;
+
+  location = {
+    country: '',
+    city: ''
+  };
+
   @ViewChild('fileInput')
   fileInput!: ElementRef<HTMLInputElement>;
 
   constructor(private adsService: AdsService,
               private router: Router,
-              private route: ActivatedRoute,) {
+              private route: ActivatedRoute, private cd: ChangeDetectorRef,) {
   }
 
   ngOnInit(): void {
@@ -119,7 +133,17 @@ export class CreateAdComponent implements OnInit {
     formData.append('title', this.title);
     formData.append('description', this.description);
     formData.append('price', this.price.toString());
-    formData.append('location', this.location);
+    formData.append('location.city', this.location.city);
+    formData.append('location.country', this.location.country);
+
+    formData.append('weight', this.weight?.toString() ?? '');
+    formData.append('birthDate', this.birthDate ?? '');
+    formData.append('gender', this.gender ?? '');
+
+    formData.append('vaccinated', String(this.vaccinated));
+    formData.append('chipped', String(this.chipped));
+    formData.append('neutered', String(this.neutered));
+
     formData.append('categoryId', this.categoryId.toString());
 
     for (const img of this.images) {
@@ -149,13 +173,27 @@ export class CreateAdComponent implements OnInit {
 
   loadAd(id: number) {
 
+    console.log('LOAD AD CALLED, id:', id);
+
     this.adsService.getById(id).subscribe({
       next: (ad) => {
+        console.log('AD RESPONSE:', ad);
         this.title = ad.title;
         this.description = ad.description;
         this.price = ad.price;
-        this.location = ad.location;
+
+        this.location.country = ad.country ?? '';
+        this.location.city = ad.city ?? '';
+
         this.categoryId = ad.categoryId;
+
+        this.weight = ad.weight ?? null;
+        this.birthDate = ad.birthDate ?? null;
+        this.gender = ad.gender ?? null;
+
+        this.vaccinated = ad.vaccinated;
+        this.chipped = ad.chipped;
+        this.neutered = ad.neutered;
 
         const existing: AllImage[] = ad.images.map(img => ({
           type: 'existing',
@@ -165,6 +203,8 @@ export class CreateAdComponent implements OnInit {
         }));
 
         this.images = existing;
+
+        this.cd.markForCheck();
       }
     });
   }

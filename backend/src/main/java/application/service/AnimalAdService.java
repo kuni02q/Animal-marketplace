@@ -13,6 +13,7 @@ import application.security.JwtService;
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
@@ -36,8 +37,10 @@ public class AnimalAdService {
         return adRepository.findAll().stream().map(mapper::toDto).toList();
     }
 
+    @Transactional
     public AnimalAdDto getById(Long id){
         AnimalAd ad = adRepository.findById(id).orElseThrow(()-> new RuntimeException("ad not found"));
+        ad.setViewCount(ad.getViewCount() == null ? 1 : ad.getViewCount()+1);
         return mapper.toDto(ad);
     }
 

@@ -54,20 +54,23 @@
 
         </div>
 
-        <div class="col-md-6 mb-3">
 
-          <label class="form-label">
-            Hely
-          </label>
+        <div class="row mb-3">
 
-          <input
-            type="text"
-            class="form-control"
-            [(ngModel)]="location">
+          <div class="col-md-6">
+            <label class="form-label">Ország</label>
+            <input class="form-control" [(ngModel)]="location.country">
+          </div>
+
+          <div class="col-md-6">
+            <label class="form-label">Város</label>
+            <input class="form-control" [(ngModel)]="location.city">
+          </div>
 
         </div>
-
       </div>
+
+
 
       <div class="mb-4">
 
@@ -80,6 +83,61 @@
         </app-category-selector>
 
       </div>
+
+
+
+      <div class="row mb-3">
+
+        <div class="col-md-6">
+          <label class="form-label">Súly (kg)</label>
+          <input type="number" class="form-control" [(ngModel)]="weight">
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label">Születési dátum</label>
+          <input type="date" class="form-control" [(ngModel)]="birthDate">
+        </div>
+
+      </div>
+
+
+
+      <div class="mb-3">
+        <label class="form-label">Nem</label>
+
+        <select class="form-select" [(ngModel)]="gender">
+          <option [ngValue]="null">Válassz</option>
+          <option value="MALE">Hím</option>
+          <option value="FEMALE">Nőstény</option>
+          <option value="UNKNOWN">Ismeretlen</option>
+        </select>
+      </div>
+
+
+
+      <div class="mb-3">
+
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" [(ngModel)]="vaccinated">
+          <label class="form-check-label">Oltott</label>
+        </div>
+
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" [(ngModel)]="chipped">
+          <label class="form-check-label">Chippelt</label>
+        </div>
+
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" [(ngModel)]="neutered">
+          <label class="form-check-label">Ivartalanított</label>
+        </div>
+
+      </div>
+
+
+
+
+      <!------------------------------>
 
       <div
         class="upload-zone mb-3"
@@ -104,7 +162,6 @@
           (change)="onFileSelected($event)">
       </div>
 
-      <!------------------------------->
 
       @if (images.length) {
 

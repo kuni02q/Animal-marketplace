@@ -40,10 +40,13 @@ public class AnimalAdMapper {
 
         dto.setGender(ad.getGender() != null ? ad.getGender().name() : null);
         dto.setStatus(ad.getStatus() != null ? ad.getStatus().name() : null);
+        dto.setBirthDate(ad.getBirthDate());
 
         if (ad.getBirthDate() != null) {
             dto.setAge(Period.between(ad.getBirthDate(), LocalDate.now()).getYears());
         }
+
+        dto.setViewCount(ad.getViewCount());
 
         dto.setCategoryId(ad.getCategory() != null ? ad.getCategory().getId() : null);
         dto.setCategoryName(ad.getCategory() != null ? ad.getCategory().getName() : null);
