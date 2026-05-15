@@ -6,6 +6,8 @@ import application.model.AnimalAd;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.List;
 
 @Component
@@ -21,10 +23,29 @@ public class AnimalAdMapper {
         dto.setTitle(ad.getTitle());
         dto.setDescription(ad.getDescription());
         dto.setPrice(ad.getPrice());
-        dto.setLocation(ad.getLocation());
+        if (ad.getLocation() != null) {
+            dto.setCity(ad.getLocation().getCity());
+            dto.setCountry(ad.getLocation().getCountry());
+        } else{
+            dto.setCity(null);
+            dto.setCountry(null);
+        }
         dto.setCreatedAt(ad.getCreatedAt());
+        dto.setUpdatedAt(ad.getUpdatedAt());
+        dto.setWeight(ad.getWeight());
 
-        dto.setCategoryId(ad.getCategory().getId());
+        dto.setVaccinated(ad.getVaccinated());
+        dto.setChipped(ad.getChipped());
+        dto.setNeutered(ad.getNeutered());
+
+        dto.setGender(ad.getGender() != null ? ad.getGender().name() : null);
+        dto.setStatus(ad.getStatus() != null ? ad.getStatus().name() : null);
+
+        if (ad.getBirthDate() != null) {
+            dto.setAge(Period.between(ad.getBirthDate(), LocalDate.now()).getYears());
+        }
+
+        dto.setCategoryId(ad.getCategory() != null ? ad.getCategory().getId() : null);
         dto.setCategoryName(ad.getCategory() != null ? ad.getCategory().getName() : null);
         dto.setUsername(ad.getUser() != null ? ad.getUser().getUsername() : null);
 

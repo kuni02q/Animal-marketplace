@@ -24,13 +24,27 @@ public class AnimalAd {
 
     private Double price;
 
-    private String location;
+    @Embedded
+    private Location location;
 
     private LocalDate birthDate;
 
-    private LocalDateTime createdAt;
+    private Double weight;
 
-    private Boolean active = true;
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
+
+    private Boolean vaccinated = false;
+    private Boolean chipped = false;
+    private Boolean neutered = false;
+
+    @Enumerated(EnumType.STRING)
+    private AdStatus status = AdStatus.ACTIVE;
+
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+
+    private Integer viewCount = 0;
 
     @ManyToOne
     @JoinColumn(name="user_id")

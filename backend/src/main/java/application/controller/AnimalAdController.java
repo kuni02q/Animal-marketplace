@@ -25,6 +25,9 @@ public class AnimalAdController {
 
     @GetMapping("/{id}")
     public AnimalAdDto getById(@PathVariable Long id) {
+
+        service.incrementViewCount(id);
+
         return service.getById(id);
     }
 

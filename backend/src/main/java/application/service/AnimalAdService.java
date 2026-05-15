@@ -4,10 +4,7 @@ import application.dto.request.CreateAdRequest;
 import application.dto.request.UpdateAdRequest;
 import application.dto.response.AnimalAdDto;
 import application.mapper.AnimalAdMapper;
-import application.model.AnimalAd;
-import application.model.Category;
-import application.model.Image;
-import application.model.User;
+import application.model.*;
 import application.repository.AnimalAdRepository;
 import application.repository.CategoryRepository;
 import application.repository.ImageRepository;
@@ -69,11 +66,30 @@ public class AnimalAdService {
         ad.setTitle(request.getTitle());
         ad.setDescription(request.getDescription());
         ad.setPrice(request.getPrice());
-        ad.setLocation(request.getLocation());
+
+        if (request.getLocation() != null) {
+            Location loc = new Location();
+            loc.setCity(request.getLocation().getCity());
+            loc.setCountry(request.getLocation().getCountry());
+            ad.setLocation(loc);
+        }
+
+
         ad.setCategory(category);
         ad.setUser(user);
         ad.setCreatedAt(LocalDateTime.now());
-        ad.setActive(true);
+        ad.setUpdatedAt(LocalDateTime.now());
+
+        ad.setWeight(request.getWeight());
+        ad.setBirthDate(request.getBirthDate());
+
+        ad.setGender(request.getGender());
+
+        ad.setVaccinated(request.getVaccinated());
+        ad.setChipped(request.getChipped());
+        ad.setNeutered(request.getNeutered());
+
+        ad.setStatus(request.getStatus() != null ? request.getStatus() : AdStatus.ACTIVE);
 
         AnimalAd saved=adRepository.save(ad);
 
@@ -101,8 +117,32 @@ public class AnimalAdService {
         ad.setTitle(request.getTitle());
         ad.setDescription(request.getDescription());
         ad.setPrice(request.getPrice());
-        ad.setLocation(request.getLocation());
-        ad.setActive(request.getActive());
+        if (request.getLocation() != null) {
+
+            Location loc = ad.getLocation();
+
+            if (loc == null) {
+                loc = new Location();
+                ad.setLocation(loc);
+            }
+
+            loc.setCity(request.getLocation().getCity());
+            loc.setCountry(request.getLocation().getCountry());
+        }
+        ad.setUpdatedAt(LocalDateTime.now());
+
+        ad.setWeight(request.getWeight());
+        ad.setBirthDate(request.getBirthDate());
+
+        ad.setGender(request.getGender());
+
+        ad.setVaccinated(request.getVaccinated());
+        ad.setChipped(request.getChipped());
+        ad.setNeutered(request.getNeutered());
+
+        if (request.getStatus() != null) {
+            ad.setStatus(request.getStatus());
+        }
 
         if (request.getCategoryId() != null) {
             Category category = categoryRepository.findById(request.getCategoryId())
@@ -149,6 +189,14 @@ public class AnimalAdService {
 
 
         adRepository.deleteById(id);
+    }
+
+    public void incrementViewCount(Long id) {
+        AnimalAd ad = adRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("ad not found"));
+
+        ad.setViewCount(ad.getViewCount() + 1);
+        adRepository.save(ad);
     }
 
 
