@@ -75,23 +75,9 @@
           Kategória
         </label>
 
-        <select
-          class="form-select"
-          [(ngModel)]="categoryId">
-
-          <option [ngValue]="null">
-            Válassz kategóriát
-          </option>
-
-          @for (category of categories; track category.id) {
-
-            <option [value]="category.id">
-              {{ category.name }}
-            </option>
-
-          }
-
-        </select>
+        <app-category-selector
+          [(selectedCategoryId)]="categoryId">
+        </app-category-selector>
 
       </div>
 

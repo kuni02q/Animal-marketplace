@@ -1,0 +1,53 @@
+<div
+  class="position-relative"
+  (click)="stopPropagation($event)">
+
+  <input
+    type="text"
+    class="form-control form-control-lg"
+    placeholder="Kategória keresése..."
+    [(ngModel)]="search"
+    (focus)="openDropdown()"
+    (input)="filterCategories()">
+
+  @if (dropdownOpen) {
+
+    <div class="dropdown-menu show w-100 mt-1 shadow border-0 rounded-4 p-2">
+
+      @if (filteredCategories.length) {
+
+        @for (category of filteredCategories; track category.id) {
+
+          <button
+            type="button"
+            class="dropdown-item rounded-3 py-2"
+            (click)="selectCategory(category)">
+
+            <span class="text-secondary small">
+              {{ category.parentName }}
+            </span>
+
+            <span class="mx-1 text-muted">
+              >
+            </span>
+
+            <span class="fw-semibold">
+              {{ category.childName }}
+            </span>
+
+          </button>
+        }
+
+      } @else {
+
+        <div class="text-center text-muted py-3">
+          Nincs találat
+        </div>
+
+      }
+
+    </div>
+
+  }
+
+</div>

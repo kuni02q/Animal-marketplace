@@ -7,11 +7,12 @@ import {CategoryService} from '../../../../core/services/category.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {environment} from '../../../../../environments/environment';
 import {AllImage} from '../../models/all-image.model';
+import {CategorySelectorComponent} from '../../components/category-selector/category-selector.component';
 
 @Component({
   selector: 'app-create-ad',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, CategorySelectorComponent],
   templateUrl: './create-ad.component.html',
   styleUrl: './create-ad.component.css',
 })
@@ -23,7 +24,6 @@ export class CreateAdComponent implements OnInit {
   location = "";
   categoryId: number | null = null;
 
-  categories: any[] = [];
 
   images: AllImage[] = []
   imagesToDelete: number[] = [];
@@ -36,13 +36,12 @@ export class CreateAdComponent implements OnInit {
   @ViewChild('fileInput')
   fileInput!: ElementRef<HTMLInputElement>;
 
-  constructor(private adsService: AdsService, private categoryService: CategoryService,
-              private router: Router, private cdr: ChangeDetectorRef,
+  constructor(private adsService: AdsService,
+              private router: Router,
               private route: ActivatedRoute,) {
   }
 
   ngOnInit(): void {
-    this.loadCategories();
 
     const id = this.route.snapshot.paramMap.get('id');
 
@@ -55,18 +54,6 @@ export class CreateAdComponent implements OnInit {
 
   }
 
-  loadCategories() {
-    this.categoryService.getAll().subscribe({
-      next: (data) => {
-        this.categories = data;
-
-        this.cdr.markForCheck();
-      },
-      error: (err) => {
-        console.log(err);
-      }
-    })
-  }
 
   onDragOver(event: DragEvent) {
     event.preventDefault();
