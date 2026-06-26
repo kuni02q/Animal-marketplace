@@ -22,7 +22,7 @@ export class CategorySelectorComponent implements OnInit {
 
   @Input() selectedCategoryId: number | null = null;
 
-  @Output() selectedCategoryIdChange = new EventEmitter<number>();
+  @Output() selectedCategoryIdChange = new EventEmitter<number | null>();
 
   categories: Category[] = [];
   flatCategories: FlatCategory[] = [];
@@ -72,7 +72,7 @@ export class CategorySelectorComponent implements OnInit {
     this.selectedCategoryId = category.id;
     this.search = category.name;
     this.dropdownOpen = false;
-    this.selectedCategoryIdChange.emit(category.id);
+    this.selectedCategoryIdChange.emit(this.selectedCategoryId);
   }
 
   openDropdown(){

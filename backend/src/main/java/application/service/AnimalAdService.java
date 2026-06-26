@@ -1,5 +1,6 @@
 package application.service;
 
+import application.dto.request.AdFilter;
 import application.dto.request.CreateAdRequest;
 import application.dto.request.UpdateAdRequest;
 import application.dto.response.AnimalAdDto;
@@ -10,8 +11,10 @@ import application.repository.CategoryRepository;
 import application.repository.ImageRepository;
 import application.repository.UserRepository;
 import application.security.JwtService;
+import application.specification.AnimalAdSpecification;
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -33,8 +36,60 @@ public class AnimalAdService {
 
 
 
-    public List<AnimalAdDto> getAllAds(){
-        return adRepository.findAll().stream().map(mapper::toDto).toList();
+    public List<AnimalAdDto> getAllAds(AdFilter filter){
+
+        Specification<AnimalAd> spec = Specification.allOf();
+
+        if (filter != null) {
+
+            if (filter.getCity() != null && !filter.getCity().isBlank()) {
+                spec = spec.and(AnimalAdSpecification.hasCity(filter.getCity()));
+            }
+
+            if (filter.getCountry() != null && !filter.getCountry().isBlank()) {
+                spec = spec.and(AnimalAdSpecification.hasCountry(filter.getCountry()));
+            }
+
+            if (filter.getCategoryId() != null) {
+                spec = spec.and(AnimalAdSpecification.hasCategory(filter.getCategoryId()));
+            }
+
+            if (filter.getMinPrice() != null) {
+                spec = spec.and(AnimalAdSpecification.minPrice(filter.getMinPrice()));
+            }
+
+            if (filter.getMaxPrice() != null) {
+                spec = spec.and(AnimalAdSpecification.maxPrice(filter.getMaxPrice()));
+            }
+
+            if (filter.getGender() != null) {
+                spec = spec.and(
+                        AnimalAdSpecification.hasGender(filter.getGender().name())
+                );
+            }
+
+            if (filter.getVaccinated() != null) {
+                spec = spec.and(AnimalAdSpecification.vaccinated(filter.getVaccinated()));
+            }
+
+            if (filter.getChipped() != null) {
+                spec = spec.and(AnimalAdSpecification.chipped(filter.getChipped()));
+            }
+
+            if (filter.getNeutered() != null) {
+                spec = spec.and(AnimalAdSpecification.neutered(filter.getNeutered()));
+            }
+
+            if (filter.getSearchText() != null && !filter.getSearchText().isBlank()) {
+                spec = spec.and(AnimalAdSpecification.searchText(filter.getSearchText()));
+            }
+
+        }
+
+        return adRepository.findAll(spec)
+                .stream()
+                .map(mapper::toDto)
+                .toList();
     }
 
     @Transactional

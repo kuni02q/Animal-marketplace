@@ -1,5 +1,6 @@
 package application.controller;
 
+import application.dto.request.AdFilter;
 import application.dto.request.CreateAdRequest;
 import application.dto.request.UpdateAdRequest;
 import application.dto.response.AnimalAdDto;
@@ -19,8 +20,8 @@ public class AnimalAdController {
     private  final AnimalAdService service;
 
     @GetMapping
-    public List<AnimalAdDto> getAll() {
-        return service.getAllAds();
+    public List<AnimalAdDto> getAll(@ModelAttribute AdFilter filter) {
+        return service.getAllAds(filter);
     }
 
     @GetMapping("/{id}")

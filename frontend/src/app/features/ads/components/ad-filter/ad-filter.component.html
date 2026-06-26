@@ -1,0 +1,138 @@
+<div class="card shadow-sm mb-4">
+  <div class="card-body">
+
+    <h5 class="mb-3">Szűrők</h5>
+
+
+    <div class="mb-2">
+      <input
+        class="form-control"
+        placeholder="Keresés címre vagy leírásra..."
+        [(ngModel)]="filter.searchText">
+    </div>
+
+
+    <div class="mb-2">
+      <app-category-selector
+        [(selectedCategoryId)]="filter.categoryId">
+      </app-category-selector>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <input class="form-control mb-2" placeholder="Ország" [(ngModel)]="filter.country">
+      </div>
+
+      <div class="col">
+        <input class="form-control mb-2" placeholder="Város" [(ngModel)]="filter.city">
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <input class="form-control mb-2" type="number" placeholder="Min ár" [(ngModel)]="filter.minPrice">
+      </div>
+
+      <div class="col">
+        <input class="form-control mb-2" type="number" placeholder="Max ár" [(ngModel)]="filter.maxPrice">
+      </div>
+    </div>
+
+    <select class="form-select mb-2" [(ngModel)]="filter.gender">
+      <option [ngValue]="null">Nem</option>
+      <option value="MALE">Hím</option>
+      <option value="FEMALE">Nőstény</option>
+      <option value="UNKNOWN">Ismeretlen</option>
+    </select>
+
+
+    <div class="row mb-3">
+
+
+      <div class="col-md-4">
+        <label class="form-label d-block mb-1">Oltottság</label>
+
+        <div class="btn-group btn-group-sm w-100" role="group">
+
+          <input class="btn-check" type="radio" name="vaccinated" id="vaccinated-null"
+                 [value]="null" [(ngModel)]="filter.vaccinated" (ngModelChange)="onVaccinatedChange($event)">
+          <label class="btn btn-outline-secondary w-100" for="vaccinated-null">Mindegy</label>
+
+          <input class="btn-check" type="radio" name="vaccinated" id="vaccinated-true"
+                 [value]="true" [(ngModel)]="filter.vaccinated" (ngModelChange)="onVaccinatedChange($event)">
+          <label class="btn btn-outline-success w-100" for="vaccinated-true">Igen</label>
+
+          <input class="btn-check" type="radio" name="vaccinated" id="vaccinated-false"
+                 [value]="false" [(ngModel)]="filter.vaccinated" (ngModelChange)="onVaccinatedChange($event)">
+          <label class="btn btn-outline-danger w-100" for="vaccinated-false">Nem</label>
+
+        </div>
+
+      </div>
+
+
+
+      <div class="col-md-4">
+        <label class="form-label d-block mb-1">Chippelt</label>
+
+        <div class="btn-group btn-group-sm w-100">
+
+          <input class="btn-check" type="radio" name="chipped" id="chipped-null"
+                 [value]="null" [(ngModel)]="filter.chipped" (ngModelChange)="onChippedChange($event)">
+          <label class="btn btn-outline-secondary w-100" for="chipped-null">Mindegy</label>
+
+          <input class="btn-check" type="radio" name="chipped" id="chipped-true"
+                 [value]="true" [(ngModel)]="filter.chipped" (ngModelChange)="onChippedChange($event)">
+          <label class="btn btn-outline-success w-100" for="chipped-true">Igen</label>
+
+          <input class="btn-check" type="radio" name="chipped" id="chipped-false"
+                 [value]="false" [(ngModel)]="filter.chipped" (ngModelChange)="onChippedChange($event)">
+          <label class="btn btn-outline-danger w-100" for="chipped-false">Nem</label>
+
+        </div>
+
+
+      </div>
+
+
+
+      <div class="col-md-4">
+        <label class="form-label d-block mb-1">Ivartalanított</label>
+
+        <div class="btn-group btn-group-sm w-100">
+
+          <input class="btn-check" type="radio" name="neutered" id="neutered-null"
+                 [value]="null" [(ngModel)]="filter.neutered" (ngModelChange)="onNeuteredChange($event)">
+          <label class="btn btn-outline-secondary w-100" for="neutered-null">Mindegy</label>
+
+          <input class="btn-check" type="radio" name="neutered" id="neutered-true"
+                 [value]="true" [(ngModel)]="filter.neutered" (ngModelChange)="onNeuteredChange($event)">
+          <label class="btn btn-outline-success w-100" for="neutered-true">Igen</label>
+
+          <input class="btn-check" type="radio" name="neutered" id="neutered-false"
+                 [value]="false" [(ngModel)]="filter.neutered" (ngModelChange)="onNeuteredChange($event)">
+          <label class="btn btn-outline-danger w-100" for="neutered-false">Nem</label>
+
+        </div>
+
+
+      </div>
+
+
+    </div>
+
+
+
+
+
+
+    <button class="btn btn-primary w-100 mb-2" (click)="apply()">
+      Szűrés
+    </button>
+
+    <button class="btn btn-outline-secondary w-100" (click)="reset()">
+      Alaphelyzet
+    </button>
+
+  </div>
+</div>

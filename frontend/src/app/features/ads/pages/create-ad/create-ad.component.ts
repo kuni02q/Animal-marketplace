@@ -191,9 +191,9 @@ export class CreateAdComponent implements OnInit {
         this.birthDate = ad.birthDate ?? null;
         this.gender = ad.gender ?? null;
 
-        this.vaccinated = ad.vaccinated;
-        this.chipped = ad.chipped;
-        this.neutered = ad.neutered;
+        this.vaccinated = ad.vaccinated ?? false;
+        this.chipped = ad.chipped ?? false;
+        this.neutered = ad.neutered ?? false;
 
         const existing: AllImage[] = ad.images.map(img => ({
           type: 'existing',

@@ -1,5 +1,9 @@
 <div class="container mt-4">
 
+  <app-ad-filter
+    (filterChange)="onFilterChange($event)">
+  </app-ad-filter>
+
   <h2 class="mb-4">Hirdetések</h2>
   @if (loading) {
     <p>Loading...</p>
