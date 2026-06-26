@@ -14,6 +14,8 @@ import application.security.JwtService;
 import application.specification.AnimalAdSpecification;
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,7 +38,7 @@ public class AnimalAdService {
 
 
 
-    public List<AnimalAdDto> getAllAds(AdFilter filter){
+    public Page<AnimalAdDto> getAllAds(AdFilter filter, Pageable pageable) {
 
         Specification<AnimalAd> spec = Specification.allOf();
 
@@ -86,10 +88,8 @@ public class AnimalAdService {
 
         }
 
-        return adRepository.findAll(spec)
-                .stream()
-                .map(mapper::toDto)
-                .toList();
+        return adRepository.findAll(spec, pageable)
+                .map(mapper::toDto);
     }
 
     @Transactional

@@ -7,6 +7,8 @@ import application.dto.response.AnimalAdDto;
 import application.model.AnimalAd;
 import application.service.AnimalAdService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -20,8 +22,8 @@ public class AnimalAdController {
     private  final AnimalAdService service;
 
     @GetMapping
-    public List<AnimalAdDto> getAll(@ModelAttribute AdFilter filter) {
-        return service.getAllAds(filter);
+    public Page<AnimalAdDto> getAll(@ModelAttribute AdFilter filter, Pageable pageable) {
+        return service.getAllAds(filter, pageable);
     }
 
     @GetMapping("/{id}")

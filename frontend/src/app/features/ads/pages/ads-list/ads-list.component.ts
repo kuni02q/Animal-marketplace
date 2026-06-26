@@ -16,6 +16,13 @@ import {AdFilterComponent} from '../../components/ad-filter/ad-filter.component'
 export class AdsListComponent implements OnInit {
 
   ads: AnimalAd[] = [];
+
+  page = 0;
+  size = 12;
+
+  totalPages = 0;
+  totalElements = 0;
+
   loading = true;
 
   filter: AdFilter = {
@@ -36,28 +43,47 @@ export class AdsListComponent implements OnInit {
   constructor(private adsService: AdsService, private cdr: ChangeDetectorRef) {}
 
   ngOnInit() {
-    this.loadAds();
+    this.load();
   }
 
-  loadAds() {
+  load() {
     this.loading = true;
 
-    this.adsService.getAll(this.filter).subscribe({
-      next: (data) => {
-        this.ads = data;
+    this.adsService.getAll(this.filter, this.page, this.size)
+      .subscribe( res => {
+        this.ads = res.content;
+        this.totalPages=res.totalPages;
+        this.totalElements=res.totalElements;
         this.loading = false;
         this.cdr.markForCheck();
-      },
-      error: err => {
-        console.log(err);
-        this.loading = false;
-      }
-    });
+      });
+  }
+
+  goToPage(p: number) {
+    this.page = p;
+    this.load();
+  }
+
+  next() {
+    if (this.page < this.totalPages - 1) {
+      this.page++;
+      this.load();
+    }
+  }
+
+  prev() {
+    if (this.page > 0) {
+      this.page--;
+      this.load();
+    }
   }
 
   onFilterChange(filter: AdFilter) {
     this.filter = filter;
-    this.loadAds();
+
+    this.page = 0;
+
+    this.load();
   }
 
 

@@ -22,7 +22,37 @@
 
       }
 
-
     </div>
   }
+
+  <!-- PAGINATION -->
+
+    <nav>
+      <ul class="pagination justify-content-center">
+
+        <li class="page-item" [class.disabled]="page === 0">
+          <button class="page-link" (click)="prev()">Előző</button>
+        </li>
+
+        @for (p of [].constructor(totalPages); track $index) {
+          <li class="page-item" [class.active]="$index === page">
+
+            <button class="page-link" (click)="goToPage($index)">
+              {{ $index + 1 }}
+            </button>
+          </li>
+        }
+
+
+        <li class="page-item" [class.disabled]="page >= totalPages - 1">
+          <button class="page-link" (click)="next()">Következő</button>
+        </li>
+
+      </ul>
+    </nav>
+  
+
+
+
+
 </div>

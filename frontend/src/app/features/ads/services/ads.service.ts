@@ -5,6 +5,14 @@ import {AnimalAd} from '../models/animal-ad.model';
 import {ApiService} from '../../../core/services/api.service';
 import {AdFilter} from '../models/ad-filter.model';
 
+export interface PageResponse<T> {
+  content: T[];
+  totalElements: number;
+  totalPages: number;
+  number: number;
+  size: number;
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -15,9 +23,9 @@ export class AdsService {
   constructor(private apiService: ApiService) {
   }
 
-  getAll(filter?: AdFilter): Observable<AnimalAd[]> {
+  getAll(filter?: AdFilter, page: number = 0, size: number = 12): Observable<PageResponse<AnimalAd>> {
 
-    let params = new HttpParams();
+    let params = new HttpParams().set('page', page).set('size', size);
 
     if (filter) {
 
@@ -53,7 +61,7 @@ export class AdsService {
 
     }
 
-    return this.apiService.get<AnimalAd[]>(this.api, {params});
+    return this.apiService.get<PageResponse<AnimalAd>>(this.api, {params});
   }
 
   getById(id: number): Observable<AnimalAd> {
