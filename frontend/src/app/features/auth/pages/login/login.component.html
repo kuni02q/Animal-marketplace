@@ -1,17 +1,17 @@
-<div>
+<form (ngSubmit)="login()">
+    <input class="form-control mb-2"
+           placeholder="Username or Email"
+           [(ngModel)]="username"
+           name="username">
 
-  <input class="form-control mb-2"
-         placeholder="Username or Email"
-         [(ngModel)]="username">
+    <input class="form-control mb-2"
+           type="password"
+           placeholder="Password"
+           [(ngModel)]="password"
+           name="password">
 
-  <input class="form-control mb-2"
-         type="password"
-         placeholder="Password"
-         [(ngModel)]="password">
-
-  <button class="btn btn-primary w-100"
-          (click)="login()">
-    Bejelentkezés
-  </button>
-
-</div>
+    <button class="btn btn-primary w-100"
+            type="submit">
+            Bejelentkezés
+    </button>
+</form>

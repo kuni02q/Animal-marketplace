@@ -1,21 +1,24 @@
-<div>
+<form  (ngSubmit)="register()">
 
-  <input class="form-control mb-2"
-         placeholder="Username"
-         [(ngModel)]="username">
+    <input class="form-control mb-2"
+           placeholder="Username"
+           [(ngModel)]="username"
+           name="username">
 
-  <input class="form-control mb-2"
-         placeholder="Email"
-         [(ngModel)]="email">
+    <input class="form-control mb-2"
+           placeholder="Email"
+           [(ngModel)]="email"
+           name="emaill">
 
-  <input class="form-control mb-2"
-         type="password"
-         placeholder="Password"
-         [(ngModel)]="password">
+    <input class="form-control mb-2"
+           type="password"
+           placeholder="Password"
+           [(ngModel)]="password"
+           name="password">
 
-  <button class="btn btn-success w-100"
-          (click)="register()">
-    Regisztráció
-  </button>
+    <button class="btn btn-success w-100"
+            type="submit">
+      Regisztráció
+    </button>
 
-</div>
+</form>
