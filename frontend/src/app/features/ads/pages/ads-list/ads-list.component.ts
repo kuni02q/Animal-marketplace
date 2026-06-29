@@ -5,11 +5,13 @@ import {AdsService} from '../../services/ads.service';
 import {AdCardComponent} from '../../components/ad-card/ad-card.component';
 import {AdFilter} from '../../models/ad-filter.model';
 import {AdFilterComponent} from '../../components/ad-filter/ad-filter.component';
+import {AdSortComponent} from '../../components/ad-sort/ad-sort.component';
+import {FormsModule} from '@angular/forms';
 
 @Component({
   selector: 'app-ads-list',
   standalone: true,
-  imports: [CommonModule, AdCardComponent, AdFilterComponent],
+  imports: [CommonModule, AdCardComponent, AdFilterComponent, AdSortComponent, FormsModule],
   templateUrl: './ads-list.component.html',
   styleUrl: './ads-list.component.css',
 })
@@ -24,6 +26,8 @@ export class AdsListComponent implements OnInit {
   totalElements = 0;
 
   loading = true;
+
+  selectedSort = 'createdAt,desc';
 
   filter: AdFilter = {
     categoryId: null,
@@ -49,7 +53,7 @@ export class AdsListComponent implements OnInit {
   load() {
     this.loading = true;
 
-    this.adsService.getAll(this.filter, this.page, this.size)
+    this.adsService.getAll(this.filter, this.page, this.size, this.selectedSort)
       .subscribe( res => {
         this.ads = res.content;
         this.totalPages=res.totalPages;
@@ -83,6 +87,12 @@ export class AdsListComponent implements OnInit {
 
     this.page = 0;
 
+    this.load();
+  }
+
+  onSortChange(sort: string) {
+    this.selectedSort = sort;
+    this.page = 0;
     this.load();
   }
 

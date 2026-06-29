@@ -23,9 +23,9 @@ export class AdsService {
   constructor(private apiService: ApiService) {
   }
 
-  getAll(filter?: AdFilter, page: number = 0, size: number = 12): Observable<PageResponse<AnimalAd>> {
+  getAll(filter?: AdFilter, page: number = 0, size: number = 12, sort: string = 'createdAt,desc'): Observable<PageResponse<AnimalAd>> {
 
-    let params = new HttpParams().set('page', page).set('size', size);
+    let params = new HttpParams().set('page', page).set('size', size).set('sort', sort);
 
     if (filter) {
 

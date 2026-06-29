@@ -4,7 +4,16 @@
     (filterChange)="onFilterChange($event)">
   </app-ad-filter>
 
-  <h2 class="mb-4">Hirdetések</h2>
+  <div class="d-flex justify-content-between align-items-center mb-4">
+
+    <h2 class="mb-0">Hirdetések</h2>
+
+    <app-ad-sort
+      (sortChange)="onSortChange($event)">
+    </app-ad-sort>
+
+  </div>
+
   @if (loading) {
     <p>Loading...</p>
   } @else if (ads.length === 0){
@@ -50,7 +59,7 @@
 
       </ul>
     </nav>
-  
+
 
 
 

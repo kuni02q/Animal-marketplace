@@ -4,11 +4,14 @@ import application.dto.request.AdFilter;
 import application.dto.request.CreateAdRequest;
 import application.dto.request.UpdateAdRequest;
 import application.dto.response.AnimalAdDto;
+import application.dto.response.PageResponse;
 import application.model.AnimalAd;
 import application.service.AnimalAdService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -22,8 +25,19 @@ public class AnimalAdController {
     private  final AnimalAdService service;
 
     @GetMapping
-    public Page<AnimalAdDto> getAll(@ModelAttribute AdFilter filter, Pageable pageable) {
-        return service.getAllAds(filter, pageable);
+    public PageResponse<AnimalAdDto> getAll(@ModelAttribute AdFilter filter,
+                                            @PageableDefault(sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable) {
+        Page<AnimalAdDto> page = service.getAllAds(filter, pageable);
+
+        return new PageResponse<>(
+                page.getContent(),
+                page.getNumber(),
+                page.getSize(),
+                page.getTotalElements(),
+                page.getTotalPages(),
+                page.isFirst(),
+                page.isLast()
+        );
     }
 
     @GetMapping("/{id}")
