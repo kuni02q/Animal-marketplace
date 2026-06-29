@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Output} from '@angular/core';
+import {Component, EventEmitter, Input, Output, SimpleChanges} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
 import {CategorySelectorComponent} from '../category-selector/category-selector.component';
@@ -13,22 +13,8 @@ import {AdFilter} from '../../models/ad-filter.model';
 })
 export class AdFilterComponent {
 
+  @Input() filter!: AdFilter;
   @Output() filterChange = new EventEmitter<AdFilter>();
-
-  filter: AdFilter = {
-    categoryId: null,
-    country: '',
-    city: '',
-    minPrice: null,
-    maxPrice: null,
-    gender: null,
-
-    vaccinated: null,
-    chipped: null,
-    neutered: null,
-
-    searchText: ''
-  };
 
   apply(){
     this.filterChange.emit({...this.filter});
@@ -63,6 +49,18 @@ export class AdFilterComponent {
 
   onNeuteredChange(value: boolean | null) {
     this.filter.neutered = value;
+  }
+
+  syncFromParent() {
+    this.filter = {
+      ...this.filter
+    };
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['filter'] && this.filter) {
+      this.syncFromParent();
+    }
   }
 
 }
